@@ -1,0 +1,41 @@
+{
+  "name": "interactive-playground",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Experimental WordPress frontend architecture lab for exploring the Interactivity API, shared state systems, and modern block interaction patterns.",
+  "license": "GPL-2.0-or-later",
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=11.9.0"
+  },
+  "scripts": {
+    "preinstall": "composer install",
+    "start": "npm-run-all -p start:blocks",
+    "build": "npm-run-all -p build:blocks",
+    "css": "node sass.js",
+    "watch:css": "chokidar './src/**/*.scss' -c 'npm run css'",
+    "build:blocks": "wp-scripts build --blocks-manifest",
+    "start:blocks": "wp-scripts start --progress --blocks-manifest",
+    "start:hot": "wp-scripts start --hot --blocks-manifest",
+    "lint:css": "wp-scripts lint-style *.css src/**/*.scss",
+    "lint:js": "wp-scripts lint-js src",
+    "format": "wp-scripts format src",
+    "lint:css-fix": "npm run lint:css -- --fix",
+    "lint:js-fix": "npm run lint:js -- --fix"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^31",
+    "chokidar-cli": "^3.0.0",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.80.0"
+  },
+  "dependencies": {
+    "@nachalo/wp-ui-components": "file:../10-wp-ui-components",
+    "@wordpress/block-editor": "^15.19.0",
+    "@wordpress/blocks": "^15.19.0",
+    "@wordpress/element": "^6.46.0",
+    "@wordpress/i18n": "^6.19.0",
+    "@wordpress/icons": "^10",
+    "normalize.css": "*"
+  }
+}

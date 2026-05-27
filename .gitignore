@@ -1,0 +1,38 @@
+# Node modules and build output
+node_modules/
+build/
+dist/
+*.log
+
+# Composer dependencies (if used)
+vendor/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor/project files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Transients, cache, temp
+*.tmp
+*.swp
+*.bak
+
+# Compiled CSS/JS (if built from src)
+*.css.map
+*.js.map
+
+# Ignore local environment files
+.env
+.env.*
+
+# Ignore PHPStorm and JetBrains IDE files
+*.iml
+/.phpstorm.meta.php
+
+# Ignore WordPress debug log
+debug.log
