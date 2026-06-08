@@ -36,7 +36,7 @@ module.exports = {
     style: resolve(process.cwd(), 'src/sass/main.scss'),
 
     // Example: Uncomment to add admin/editor JS overrides
-    // 'core-block-overrides': resolve(process.cwd(), 'src/js/admin/core-block-overrides.js'),
+    'block-overrides': resolve(process.cwd(), 'src/js/block-overrides/block-overrides.js'),
   },
 
   // Extend output config: clean output dir before build

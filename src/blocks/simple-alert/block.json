@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "dpuk/simple-alert",
+  "version": "1.0.0",
+  "title": "Simple Alert",
+  "category": "dpuk",
+  "icon": "warning",
+  "description": "A simple custom alert block.",
+  "attributes": {
+    "message": {
+      "type": "string",
+      "default": "Hello from Gutenberg!"
+    },
+    "type": {
+      "type": "string",
+      "default": "info"
+    }
+  },
+    "textdomain": "interactive-playground",
+    "editorScript": "file:./index.js"
+}

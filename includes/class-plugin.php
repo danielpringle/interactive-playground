@@ -101,6 +101,7 @@ final class Plugin {
 
 		add_action( 'init', array( $this, 'register_blocks' ) );
 		add_filter( 'block_categories_all', array( $this, 'register_block_categories' ), 20, 2 );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'editor_core_block_overrides' ) );
 	}
 
 	/**
@@ -144,6 +145,23 @@ final class Plugin {
 
 			return $block_categories;
 	}
+
+
+	public function editor_core_block_overrides() {
+		$overrides_path = WP_IAP_DIR . '/build/block-overrides.js';
+		$overrides_url = plugins_url( 'build/block-overrides.js', __DIR__ );
+
+		if ( file_exists( $overrides_path ) ) {
+			wp_enqueue_script(
+				'block-overrides',
+				$overrides_url,
+				array(),
+				filemtime( $overrides_path ),
+				true
+			);
+		}
+	}
+
 
 	/**
 	 * The name of the plugin used to uniquely identify it within the context of

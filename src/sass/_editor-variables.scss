@@ -1,0 +1,46 @@
+.editor-styles-wrapper {
+	// Block Placeholder Design Tokens
+	--block-placeholder-bg: #f8fafc;
+	--block-placeholder-border: 1px dashed #b8c0cc;
+	--block-placeholder-radius: 8px;
+	--block-placeholder-padding: 16px 14px;
+	--block-placeholder-label-bg: #e7edf5;
+	--block-placeholder-label-color: #344054;
+	--block-placeholder-label-border: 1px solid #b8c0cc;
+	--block-placeholder-label-radius: 4px;
+	--block-placeholder-label-font-size: 11px;
+	--block-placeholder-label-font-weight: 700;
+	--block-placeholder-label-spacing: 0.04em;
+	--block-placeholder-label-padding: 3px 8px;
+	--block-placeholder-label-top: -10px;
+	--block-placeholder-label-z: 1;
+}
+
+.block-placeholder {
+	position: relative;
+	background: var(--block-placeholder-bg);
+	border: var(--block-placeholder-border);
+	border-radius: var(--block-placeholder-radius);
+	padding: var(--block-placeholder-padding);
+}
+
+.block-placeholder::before {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	content: attr(data-title);
+	position: absolute;
+	top: var(--block-placeholder-label-top);
+	left: 16px;
+	padding: var(--block-placeholder-label-padding);
+	border-radius: var(--block-placeholder-label-radius);
+	background: var(--block-placeholder-label-bg);
+	color: var(--block-placeholder-label-color);
+	font-size: var(--block-placeholder-label-font-size);
+	font-weight: var(--block-placeholder-label-font-weight);
+	letter-spacing: var(--block-placeholder-label-spacing);
+	text-transform: uppercase;
+	border: var(--block-placeholder-label-border);
+	z-index: var(--block-placeholder-label-z);
+	line-height: 1.2;
+}

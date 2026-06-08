@@ -7,4 +7,4 @@
  * @package DPUK\ThemeTools
  */
 
-namespace DPUK\BlockKit;
+namespace DPUK\InteractivePlayground;
