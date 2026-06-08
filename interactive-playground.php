@@ -31,7 +31,34 @@ define( 'WP_IAP_DIR', __DIR__ );
 define( 'WP_IAP_BLOCKS', WP_IAP_DIR . '/build/blocks/' );
 define( 'WP_IAP_MANIFEST_FILE', __DIR__ . '/build/blocks-manifest.php' );
 
+// Load plugin JSON
+add_filter('acf/settings/load_json', function ($paths) {
 
+    $paths[] = plugin_dir_path(__FILE__) . 'acf-json';
+
+    return $paths;
+
+});
+
+// Save this specific group to plugin
+add_filter('acf/settings/save_json/key=group_6900b25ca1973', function ($path) {
+
+    return plugin_dir_path(__FILE__) . 'acf-json';
+
+});
+
+
+add_action('acf/init', function() {
+    if ( function_exists( 'acf_add_options_page' ) ) {
+        acf_add_options_page( array(
+            'page_title'    => 'Interactive Playground Settings',
+            'menu_title'    => 'Playground Settings',
+            'menu_slug'     => 'interactive-playground-settings',
+            'capability'    => 'manage_options',
+            'redirect'      => false,
+        ) );
+    }
+});
 
 /**
  * Loads global helper functions for the plugin.
@@ -39,6 +66,21 @@ define( 'WP_IAP_MANIFEST_FILE', __DIR__ . '/build/blocks-manifest.php' );
  * This file contains procedural functions used throughout the plugin that are not part of the main class.
  */
 require_once plugin_dir_path( __FILE__ ) . 'includes/functions.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/html-processor/html-processor.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/html-tag-processor/html-tag-processor.php';
+
+/**
+ * Autoload all block binding sources from inc/block-bindings/
+ *
+ * This keeps block binding registrations modular and organized.
+ */
+$block_bindings_dir = plugin_dir_path( __FILE__ ) . 'includes/block-bindings/';
+if ( is_dir( $block_bindings_dir ) ) {
+	foreach ( glob( $block_bindings_dir . '*.php' ) as $file ) {
+		require_once $file;
+	}
+}
+
 
 /**
  * The core plugin class that is used to define the hooks that initialise the various components.
