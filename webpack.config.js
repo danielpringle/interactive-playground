@@ -30,13 +30,23 @@ module.exports = {
     // Default block entries (returns an object, not a function)
     ...defaultConfig.entry(), 
 
-    // Custom frontend theme JS (uncomment or add more as needed)
+    // Global frontend JavaScript for plugin-level behaviour.
     main: resolve(process.cwd(), 'src/js/main.js'),
 
-    style: resolve(process.cwd(), 'src/sass/main.scss'),
+    // Global frontend stylesheet compiled to build/style.css.
+    style: resolve(process.cwd(), 'src/sass/style.scss'),
 
-    // Example: Uncomment to add admin/editor JS overrides
+    // Shared block editor stylesheet for reusable editor UI/components.
+    editor: resolve(process.cwd(), 'src/sass/editor/index.scss'),
+
+    // Block editor script for registering core block overrides, styles, and variations.
     'block-overrides': resolve(process.cwd(), 'src/js/block-overrides/block-overrides.js'),
+
+    	// React UI for the Activity CPT editor.
+    'settings': resolve(
+      process.cwd(),
+      'src/js/settings/settings.js'
+    ),
   },
 
   // Extend output config: clean output dir before build

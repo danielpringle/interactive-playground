@@ -104,7 +104,8 @@ final class Plugin {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_canvas_styles' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'editor_core_block_overrides' ) );
-
+		add_action( 'enqueue_block_editor_assets', array( $this, 'add_settings_to_posts' ) );
+		add_action( 'init', [ $this, 'register_meta' ] );
 	}
 
 	/**
@@ -195,6 +196,73 @@ final class Plugin {
 				true
 			);
 		}
+	}
+
+	/**
+	 * Register the place ID post meta.
+	 *
+	 * Registers the `place_id` meta field for standard WordPress posts,
+	 * allowing the selected place to be stored and accessed through
+	 * the WordPress REST API.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public function register_meta() {
+		register_post_meta(
+			'post',
+			'place_id',
+			[
+				'type'              => 'integer',
+				'single'            => true,
+				'default'           => 0,
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'absint',
+				'auth_callback'     => function () {
+					return current_user_can( 'edit_posts' );
+				},
+			]
+		);
+	}
+
+	/**
+	 * Enqueue the Activity settings editor script.
+	 *
+	 * Loads the React-based settings interface in the WordPress block editor
+	 * when editing standard posts. The script provides the Activity settings
+	 * UI and uses the registered post meta to store the selected place.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public function add_settings_to_posts() {
+
+		$screen = get_current_screen();
+
+		if ( ! $screen || 'post' !== $screen->post_type ) {
+			return;
+		}
+
+		$asset_file = WP_IAP_DIR . '/build/settings.asset.php';
+
+		if ( ! file_exists( $asset_file ) ) {
+			return;
+		}
+
+		$asset = include $asset_file;
+
+		wp_enqueue_script(
+			'activity-settings',
+			plugins_url(
+				'build/settings.js',
+				WP_IAP_DIR . '/interactive-playground.php'
+			),
+			$asset['dependencies'],
+			$asset['version'],
+			true
+		);
 	}
 
 	/**
