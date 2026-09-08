@@ -123,8 +123,8 @@ if ( ! function_exists( 'wp_iap_render_tag_processor_shortcode' ) ) {
 		$html  = '<section class="html-tag-processor-demo">';
 		$html .= '<h2>WP_HTML_Tag_Processor Demo (' . esc_html( (string) $atts['mode'] ) . ')</h2>';
 		$html .= '<p>Modes: default, classes, a11y, performance, sanitize</p>';
-		$html .= '<h3>Input</h3><pre>' . esc_html( $input ) . '</pre>';
-		$html .= '<h3>Output</h3><pre>' . esc_html( $output ) . '</pre>';
+		$html .= '<h3>Input</h3><pre><code>' . esc_html( $input ) . '</code></pre>';
+		$html .= '<h3>Output</h3><pre><code>' . esc_html( $output ) . '</code></pre>';
 		$html .= '<h3>Rendered Output</h3><div class="demo-render">' . wp_kses_post( $output ) . '</div>';
 		$html .= '</section>';
 

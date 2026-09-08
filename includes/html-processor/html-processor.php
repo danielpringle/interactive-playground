@@ -66,8 +66,8 @@ add_shortcode( 'html_api_demo', function () {
 
     $html  = '<section class="html-api-demo">';
     $html .= '<h2>HTML API Demo</h2>';
-    $html .= '<h3>Input</h3><pre>' . esc_html( $input ) . '</pre>';
-    $html .= '<h3>Output</h3><pre>' . esc_html( $output ) . '</pre>';
+    $html .= '<h3>Input</h3><pre><code>' . esc_html( $input ) . '</code></pre>';
+    $html .= '<h3>Output</h3><pre><code>' . esc_html( $output ) . '</code></pre>';
     $html .= '<h3>Rendered Output</h3><div class="demo-render">' . $output . '</div>';
     $html .= '</section>';
 
