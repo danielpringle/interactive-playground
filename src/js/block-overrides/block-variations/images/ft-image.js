@@ -24,7 +24,7 @@ registerBlockVariation("core/image", {
             }
         },
         metadata: {
-            name: "ACF IMG",
+            name: "ACF IMG Binding",
             bindings: {
                 url: { 
                     source: "acf/field", 
@@ -55,15 +55,16 @@ wp.domReady(() => {
       attributes: {
         className: "is-display-featured-image",
         metadata: {
+            name: "FT Image Binding",
             bindings: {
                 url: {
-                    source: 'fliteragency/post-featured-image',
+                    source: 'dpuk/post-featured-image',
                     args: {
                         key: 'url',
                     },
                 },
                  alt: {
-                    source: 'fliteragency/post-featured-image',
+                    source: 'dpuk/post-featured-image',
                     args: {
                         key: 'alt',
                     },

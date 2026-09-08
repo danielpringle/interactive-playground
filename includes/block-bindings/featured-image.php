@@ -14,7 +14,7 @@ if ( ! function_exists( __NAMESPACE__ . '\\register_featured_image_binding' ) ) 
      * Register the featured image block binding source.
      */
     function register_featured_image_binding() {
-        register_block_bindings_source( 'fliteragency/post-featured-image', array(
+        register_block_bindings_source( 'dpuk/post-featured-image', array(
             'label'              => esc_html__( 'Featured Image', 'dpuk-block-bindings' ),
             'get_value_callback' => __NAMESPACE__ . '\featured_image_binding_callback',
         ) );

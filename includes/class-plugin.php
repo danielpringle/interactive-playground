@@ -101,7 +101,10 @@ final class Plugin {
 
 		add_action( 'init', array( $this, 'register_blocks' ) );
 		add_filter( 'block_categories_all', array( $this, 'register_block_categories' ), 20, 2 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_canvas_styles' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'editor_core_block_overrides' ) );
+
 	}
 
 	/**
@@ -147,6 +150,38 @@ final class Plugin {
 	}
 
 
+	public function enqueue_styles() {
+		$style_path = WP_IAP_DIR . '/build/style.css';
+		$style_url  = plugins_url( 'build/style.css', WP_IAP_DIR . '/interactive-playground.php' );
+
+		if ( file_exists( $style_path ) ) {
+			wp_enqueue_style(
+				'interactive-playground',
+				$style_url,
+				array(),
+				filemtime( $style_path )
+			);
+		}
+	}
+
+	public function enqueue_editor_canvas_styles() {
+		if ( ! is_admin() ) {
+        	return;
+    	}
+		$style_path = WP_IAP_DIR . '/build/editor.css';
+		$style_url  = plugins_url( 'build/editor.css', WP_IAP_DIR . '/interactive-playground.php' );
+
+		if ( file_exists( $style_path ) ) {
+			wp_enqueue_style(
+				'interactive-playground-editor',
+				$style_url,
+				array(),
+				filemtime( $style_path )
+			);
+		}
+	}
+
+
 	public function editor_core_block_overrides() {
 		$overrides_path = WP_IAP_DIR . '/build/block-overrides.js';
 		$overrides_url = plugins_url( 'build/block-overrides.js', __DIR__ );
@@ -161,7 +196,6 @@ final class Plugin {
 			);
 		}
 	}
-
 
 	/**
 	 * The name of the plugin used to uniquely identify it within the context of

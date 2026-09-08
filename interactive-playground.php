@@ -40,13 +40,14 @@ add_filter('acf/settings/load_json', function ($paths) {
 
 });
 
-// Save this specific group to plugin
+// Save this specific groups to plugin
 add_filter('acf/settings/save_json/key=group_6900b25ca1973', function ($path) {
-
     return plugin_dir_path(__FILE__) . 'acf-json';
-
 });
 
+add_filter('acf/settings/save_json/key=group_6a16f2fb48d6b', function ($path) {
+    return plugin_dir_path(__FILE__) . 'acf-json';
+});
 
 add_action('acf/init', function() {
     if ( function_exists( 'acf_add_options_page' ) ) {

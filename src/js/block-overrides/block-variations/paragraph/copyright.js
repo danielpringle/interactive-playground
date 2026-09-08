@@ -21,13 +21,13 @@ import { __ } from '@wordpress/i18n';
  */
 registerBlockVariation("core/paragraph", {
     name: "dpuk-binding-copyright",
-    title: "Copyright",
+    title: "Copyright Binding",
     description: __( 'Display copyright data', 'nachalo-scaffold' ),
     icon: "info",
     attributes: {
         className: "copyright",
         metadata: {
-            name: "Copyright",
+            name: "Copyright Binding",
             bindings: {
                 content: { 
                     source: 'nachalo-scaffold/display-copyright',

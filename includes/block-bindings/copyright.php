@@ -15,7 +15,7 @@ if ( ! function_exists( __NAMESPACE__ . '\register_copyright_binding' ) ) {
      */
     function register_copyright_binding() {
         register_block_bindings_source( 'nachalo-scaffold/display-copyright', array(
-            'label'              => esc_html__( 'Copyright', 'dpuk-block-bindings' ),
+            'label'              => esc_html__( 'Copyright Binding', 'dpuk-block-bindings' ),
             'get_value_callback' => __NAMESPACE__ . '\copyright_binding_callback',
         ) );
     }
