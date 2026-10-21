@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "dpuk/post-guard-test",
+  "version": "1.0.0",
+  "title": "Post Guard Test",
+  "category": "dpuk",
+  "icon": "warning",
+  "description": "Testing Post Guard.",
+  "attributes": {
+    "message": {
+      "type": "string",
+      "default": "Post Guard Test!"
+    },
+    "type": {
+      "type": "string",
+      "default": "info"
+    }
+  },
+  "nachalo": { "requiredPostTypes": [ "events" ]},
+    "textdomain": "interactive-playground",
+    "editorScript": "file:./index.js"
+}
