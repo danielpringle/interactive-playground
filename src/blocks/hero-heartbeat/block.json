@@ -1,0 +1,35 @@
+{
+  "apiVersion": 3,
+  "name": "dpuk/hero-pulse",
+  "title": "Hero Pulse",
+  "category": "design",
+  "icon": "cover-image",
+  "version": "0.1.0",
+  "description": "Animated wave-to-particle hero block",
+	"supports": {
+		"html": false,
+		"anchor": false,
+		"align": [ "wide", "full" ],
+		"alignWide": true,
+    "color": {
+      "text": false,
+      "background": true,
+      "gradients": true
+    }
+	},
+  "attributes": {
+		"paddingBlockStart": {
+			"type": "string",
+			"default": "100px"
+		},
+		"paddingBlockEnd": {
+			"type": "string",
+			"default": "100px"
+		}
+  },
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": [ "file:./style-index.css" ],
+	"render": "file:./template.php",
+  "viewScript": [ "file:./frontend.js" ]
+}

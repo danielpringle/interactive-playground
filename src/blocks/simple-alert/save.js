@@ -1,4 +1,4 @@
-import { Alert } from '@nachalo/wp-ui-components';
+import { Alert } from '../../components/alert/alert.js';
 
 export default function save({ attributes }) {
   const { message, type } = attributes;

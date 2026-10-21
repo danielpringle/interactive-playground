@@ -1,6 +1,6 @@
 import { TextControl, SelectControl } from '@wordpress/components';
 
-import { Alert } from '@nachalo/wp-ui-components';
+import { Alert } from '../../components/alert/alert.js';
 
 export default function Edit({ attributes, setAttributes }) {
   const { message, type } = attributes;
