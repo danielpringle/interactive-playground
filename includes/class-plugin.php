@@ -224,6 +224,32 @@ final class Plugin {
 				},
 			]
 		);
+
+		register_post_meta(
+			'post',
+			'related_post_type',
+			array(
+				'type'          => 'string',
+				'single'        => true,
+				'show_in_rest'  => true,
+				'auth_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
+			)
+		);
+
+		register_post_meta(
+			'post',
+			'related_post_id',
+			array(
+				'type'          => 'integer',
+				'single'        => true,
+				'show_in_rest'  => true,
+				'auth_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
+			)
+		);
 	}
 
 	/**
@@ -241,7 +267,13 @@ final class Plugin {
 
 		$screen = get_current_screen();
 
-		if ( ! $screen || 'post' !== $screen->post_type ) {
+		$allowed_post_types = array(
+			'post',
+			'activity',
+			'event',
+		);
+
+		if ( ! $screen || ! in_array( $screen->post_type, $allowed_post_types, true ) ) {
 			return;
 		}
 
@@ -254,7 +286,7 @@ final class Plugin {
 		$asset = include $asset_file;
 
 		wp_enqueue_script(
-			'activity-settings',
+			'wp-iap-settings',
 			plugins_url(
 				'build/settings.js',
 				WP_IAP_DIR . '/interactive-playground.php'

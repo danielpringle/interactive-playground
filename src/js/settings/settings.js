@@ -1,78 +1,97 @@
-/**
- * Activity editor settings.
- *
- * Adds custom settings to the WordPress editor for Activity posts.
- *
- * Provides a searchable place selector and stores the selected place
- * post ID in the `place_id` post meta field.
- *
- * @package DPUK\InteractivePlayground
- */
-
-/**
- * WordPress dependencies.
- */
-import { registerPlugin } from '@wordpress/plugins';
-import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
-import { ComboboxControl } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { registerPlugin } from '@wordpress/plugins';
 
-function ActivitySettings() {
-	const [ search, setSearch ] = useState( '' );
+import SettingsPanel from '../../components/settings-panel/settings-panel';
+import PostTypeSelect from '../../components/post-type-select/post-type-select';
+import PostSelect from '../../components/post-select/post-select';
 
+const Settings = () => {
+	/**
+	 * WordPress editor dispatch actions.
+	 *
+	 * @type {Object}
+	 */
+	const { editPost } = useDispatch( 'core/editor' );
+
+	/**
+	 * Get the current edited post meta from the WordPress editor.
+	 *
+	 * @type {Object}
+	 */
 	const meta = useSelect(
 		( select ) =>
 			select( 'core/editor' ).getEditedPostAttribute( 'meta' ) || {},
 		[]
 	);
 
-	const places = useSelect(
-		( select ) =>
-			select( 'core' ).getEntityRecords( 'postType', 'treatments', {
-				per_page: 20,
-				search,
-				orderby: 'title',
-				order: 'asc',
-			} ),
-		[ search ]
-	);
+	/**
+	 * Get the selected related post type and post ID.
+	 *
+	 * @type {string}
+	 */
+	const postType = meta.related_post_type || '';
 
-	const { editPost } = useDispatch( 'core/editor' );
+	/**
+	 * Get the selected related post ID.
+	 *
+	 * @type {number}
+	 */
+	const postId = meta.related_post_id || 0;
 
-	const options = ( places || [] ).map( ( place ) => ( {
-		label: place.title.rendered,
-		value: String( place.id ),
-	} ) );
+	/**
+	 * Handle a change to the related post type.
+	 *
+	 * Resets the selected post when the post type changes.
+	 *
+	 * @param {string} value Selected post type.
+	 */
+	const handlePostTypeChange = ( value ) => {
+		editPost( {
+			meta: {
+				...meta,
+				related_post_type: value,
+				related_post_id: 0,
+			},
+		} );
+	};
 
-	const selectedPlace = meta.place_id
-		? String( meta.place_id )
-		: '';
+	/**
+	 * Handle a change to the related post.
+	 *
+	 * @param {number} value Selected post ID.
+	 */
+	const handlePostChange = ( value ) => {
+		editPost( {
+			meta: {
+				...meta,
+				related_post_id: value || 0,
+			},
+		} );
+	};
 
 	return (
-		<PluginDocumentSettingPanel
-			name="activity-settings"
-			title="Activity Settings"
+		<SettingsPanel
+			name="dpuk-settings"
+			title="Settings"
 		>
-			<ComboboxControl
-				label="Place"
-				value={ selectedPlace }
-				options={ options }
-				onFilterValueChange={ setSearch }
-				onChange={ ( value ) => {
-					editPost( {
-						meta: {
-							...meta,
-							place_id: parseInt( value, 10 ) || 0,
-						},
-					} );
-				} }
-				help="Search for a place by name."
+			<PostTypeSelect
+				label="Post type"
+				value={ postType }
+				onChange={ handlePostTypeChange }
 			/>
-		</PluginDocumentSettingPanel>
-	);
-}
 
-registerPlugin( 'activity-settings', {
-	render: ActivitySettings,
+			{ postType && (
+				<PostSelect
+					postType={ postType }
+					label="Post"
+					value={ postId }
+					onChange={ handlePostChange }
+				/>
+			) }
+		</SettingsPanel>
+	);
+};
+
+registerPlugin( 'dpuk-settings', {
+	render: Settings,
 } );
